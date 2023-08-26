@@ -1,10 +1,10 @@
 package com.example.exampractice
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
@@ -28,6 +28,7 @@ class SignupActivity : AppCompatActivity() {
     private lateinit var passwordCStr:String
     private lateinit var progressDialog:Dialog
     private lateinit var dialogText:TextView
+    private lateinit var context:Context
 
 
 
@@ -41,6 +42,7 @@ class SignupActivity : AppCompatActivity() {
         etPasswordC=findViewById(R.id.etPasswordC)
         btnBack=findViewById(R.id.btnback)
         btnSignup=findViewById(R.id.btnSignup)
+        context=this
 
         auth= FirebaseAuth.getInstance()
         progressDialog= Dialog(this)
@@ -97,10 +99,23 @@ class SignupActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                    Toast.makeText(this,"Sign Up Successful",Toast.LENGTH_SHORT).show()
-                    DBQuery.createUserData(emailStr,nameStr)
-                    progressDialog.dismiss()
-                    val i=Intent(this,MainActivity::class.java)
-                    startActivity(i)
+                    val obj =object: MyCompleteListener{
+                        override fun onSuccess() {
+                            progressDialog.dismiss()
+                            val i=Intent(context,MainActivity::class.java)
+                            startActivity(i)
+                            (context as SignupActivity).finish()
+                        }
+
+                        override fun onFailure() {
+                            Toast.makeText(context,"Something went wrong",Toast.LENGTH_SHORT).show()
+                            progressDialog.dismiss()
+                        }
+
+                    }
+                    DBQuery.createUserData(emailStr, nameStr,obj)
+
+
                 } else {
                     progressDialog.dismiss()
 
