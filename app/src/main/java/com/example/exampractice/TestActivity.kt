@@ -25,7 +25,7 @@ class TestActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(true)
         val catIndex = intent.getIntExtra("CAT_INDEX",0)
-        supportActionBar?.title = CategoryFragment.catList[catIndex].getName()
+        supportActionBar?.title = DBQuery.g_catList[catIndex].getName()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 

@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.GridView
 
 class CategoryFragment : Fragment() {
-        companion object{public  var catList:MutableList<CategoryModel> = ArrayList()}
+
     private lateinit var catView:GridView
 
 
@@ -20,19 +20,11 @@ class CategoryFragment : Fragment() {
         // Inflate the layout for this fragment
         val view:View = inflater.inflate(R.layout.fragment_category, container, false)
         catView = view.findViewById(R.id.cat_grid)
-        loadCategories()
-        val adapter = CategoryAdapter(catList)
+        //loadCategories()
+        val adapter = CategoryAdapter(DBQuery.g_catList)
         catView.adapter=adapter
         return view
     }
 
-    private fun loadCategories(){
 
-        catList.clear()
-        catList.add(CategoryModel("1","GK",20))
-        catList.add(CategoryModel("2","LOGICAL REASONING",20))
-        catList.add(CategoryModel("3","MATHS",20))
-        catList.add(CategoryModel("4","CHEMISTRY",20))
-        catList.add(CategoryModel("5","PHYSICS",20))
-}
 }

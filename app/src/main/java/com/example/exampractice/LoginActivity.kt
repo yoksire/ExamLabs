@@ -40,6 +40,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var tvSignUp:TextView
     private lateinit var progressDialog:Dialog
     private lateinit var dialogText:TextView
+    private lateinit var context:Context
     private lateinit var auth:FirebaseAuth
     private lateinit var gSignB:RelativeLayout
     private lateinit var googleSignInClient :GoogleSignInClient
@@ -54,6 +55,7 @@ class LoginActivity : AppCompatActivity() {
         tvForgotPsw=findViewById(R.id.tvForgotPass)
         tvSignUp=findViewById(R.id.tvSignup)
         gSignB=findViewById(R.id.google_sigin)
+         context=this
         progressDialog= Dialog(this)
         progressDialog.setContentView(R.layout.dialog_layout)
         progressDialog.setCancelable(false)
@@ -114,14 +116,81 @@ class LoginActivity : AppCompatActivity() {
     }
     private fun updateUI(account:GoogleSignInAccount){
         progressDialog.show()
+
         val credential = GoogleAuthProvider.getCredential(account.idToken,null)
         auth.signInWithCredential(credential).addOnCompleteListener{task->
                 if(task.isSuccessful){
-                    progressDialog.dismiss()
+
                     // Sign in success, update UI with the signed-in user's information
-                    Toast.makeText(this,"Login Success",Toast.LENGTH_SHORT).show()
-                    var i=Intent(this,MainActivity::class.java)
-                    startActivity(i)
+
+                    if(task.result.additionalUserInfo!!.isNewUser){
+                        val user =auth.currentUser
+
+                        val obj =object: MyCompleteListener{
+                            override fun onSuccess() {
+
+                                val obj1=object :MyCompleteListener{
+                                    override fun onSuccess() {
+                                        progressDialog.dismiss()
+                                        Toast.makeText(context,"Login Success",Toast.LENGTH_SHORT).show()
+                                        val i=Intent(context,MainActivity::class.java)
+                                        startActivity(i)
+                                        (context as LoginActivity).finish()
+                                    }
+
+                                    override fun onFailure() {
+                                        progressDialog.dismiss()
+                                        Toast.makeText(
+                                            context,
+                                            "Something went wrong ! Please try again",
+                                            Toast.LENGTH_SHORT,
+                                        ).show()
+                                    }
+
+                                }
+                                DBQuery.loadCategories(obj1)
+
+
+                            }
+
+                            override fun onFailure() {
+                                progressDialog.dismiss()
+                                Toast.makeText(
+                                    context,
+                                    "Something went wrong ! Please try again",
+                                    Toast.LENGTH_SHORT,
+                                ).show()
+                            }
+
+                        }
+                        if (user != null) {
+                            DBQuery.createUserData(user.email.toString() , user.displayName.toString(), obj )
+
+                        }
+                    }else{
+
+                        val obj =object: MyCompleteListener{
+                            override fun onSuccess() {
+                                progressDialog.dismiss()
+                                val i=Intent(context,MainActivity::class.java)
+                                startActivity(i)
+                                Toast.makeText(context,"Login Success",Toast.LENGTH_SHORT).show()
+                                (context as LoginActivity).finish()
+                            }
+
+                            override fun onFailure() {
+                                progressDialog.dismiss()
+                                Toast.makeText(
+                                    context,
+                                    "Something went wrong ! Please try again",
+                                    Toast.LENGTH_SHORT,
+                                ).show()
+                            }
+
+                        }
+                        DBQuery.loadCategories(obj)
+                    }
+
                 }
             else{
                     progressDialog.dismiss()
@@ -152,11 +221,31 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(etEmail.text.toString().trim(), etPsw.text.toString().trim())
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    progressDialog.dismiss()
+
                     // Sign in success, update UI with the signed-in user's information
-                    Toast.makeText(this,"Login Success",Toast.LENGTH_SHORT).show()
-                    var i=Intent(this,MainActivity::class.java)
-                    startActivity(i)
+
+                    Toast.makeText(context,"Login Success",Toast.LENGTH_SHORT).show()
+                    val obj1=object :MyCompleteListener{
+                        override fun onSuccess() {
+                            progressDialog.dismiss()
+
+                            var i=Intent(context,MainActivity::class.java)
+                            startActivity(i)
+                        }
+
+                        override fun onFailure() {
+                            progressDialog.dismiss()
+                            Toast.makeText(
+                                context,
+                                "Something went wrong ! Please try again",
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                        }
+
+                    }
+                    DBQuery.loadCategories(obj1)
+
+
 
                 } else {
                     // If sign in fails, display a message to the user.

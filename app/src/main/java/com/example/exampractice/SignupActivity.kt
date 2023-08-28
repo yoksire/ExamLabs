@@ -101,10 +101,26 @@ class SignupActivity : AppCompatActivity() {
                    Toast.makeText(this,"Sign Up Successful",Toast.LENGTH_SHORT).show()
                     val obj =object: MyCompleteListener{
                         override fun onSuccess() {
-                            progressDialog.dismiss()
-                            val i=Intent(context,MainActivity::class.java)
-                            startActivity(i)
-                            (context as SignupActivity).finish()
+                            val obj1=object :MyCompleteListener{
+                                override fun onSuccess() {
+                                    progressDialog.dismiss()
+                                    Toast.makeText(context,"Login Success",Toast.LENGTH_SHORT).show()
+                                    var i=Intent(context,MainActivity::class.java)
+                                    startActivity(i)
+                                    (context as SignupActivity).finish()
+                                }
+
+                                override fun onFailure() {
+                                    progressDialog.dismiss()
+                                    Toast.makeText(
+                                        context,
+                                        "Something went wrong ! Please try again",
+                                        Toast.LENGTH_SHORT,
+                                    ).show()
+                                }
+
+                            }
+                            DBQuery.loadCategories(obj1)
                         }
 
                         override fun onFailure() {
