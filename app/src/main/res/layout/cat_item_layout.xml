@@ -5,38 +5,45 @@
     android:orientation="vertical"
     android:background="?android:attr/selectableItemBackground"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <androidx.cardview.widget.CardView
+        android:id="@+id/cvCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:cardUseCompatPadding="true"
-        app:cardElevation="5dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:translationZ="3dp"
         app:cardCornerRadius="8dp"
-        >
+        app:cardElevation="5dp"
+        app:cardUseCompatPadding="true">
+
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llCategory"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:orientation="vertical"
             android:gravity="center"
-            >
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/catName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Kuch Bhi"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textAlignment="center"/>
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/numTest"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="25 Tests"
-                android:textColor="@color/colorPrimary"
                 android:layout_marginTop="8dp"
+                android:text="25 Tests"
                 android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
 
                 />
         </androidx.appcompat.widget.LinearLayoutCompat>

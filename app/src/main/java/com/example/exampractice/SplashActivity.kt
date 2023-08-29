@@ -20,16 +20,17 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         context=this
-        var appName=findViewById<TextView>(R.id.tvAppName)
-        var typeface= ResourcesCompat.getFont(this,R.font.blacklistbolditalic)
+        val appName=findViewById<TextView>(R.id.tvAppName)
+        val typeface= ResourcesCompat.getFont(this,R.font.blacklistbolditalic)
         appName.typeface = typeface
-        var anim = AnimationUtils.loadAnimation(this,R.anim.myanim)
+        val anim = AnimationUtils.loadAnimation(this,R.anim.myanim)
         appName.animation=anim
         mAuth = FirebaseAuth.getInstance()
         val obj=object : MyCompleteListener {
             override fun onSuccess() {
                 val i = Intent(context,MainActivity::class.java)
                 startActivity(i)
+                finish()
             }
 
             override fun onFailure() {
@@ -43,11 +44,10 @@ class SplashActivity : AppCompatActivity() {
 
         DBQuery.g_firestore= Firebase.firestore
         if(mAuth.currentUser != null){
-            appName.animate().setDuration(2500).alpha(1f).withEndAction{
+            appName.animate().setDuration(1500).alpha(1f).withEndAction{
                 DBQuery.loadCategories(obj)
-                val i = Intent(this,MainActivity::class.java)
-                startActivity(i)
-                finish()
+
+
             }
 
         }else{

@@ -15,6 +15,8 @@ class DBQuery {
         @SuppressLint("StaticFieldLeak")
         public lateinit var g_firestore:FirebaseFirestore
         public  var g_catList:MutableList<CategoryModel> = ArrayList()
+        public val  g_testList:MutableList<TestModel> = ArrayList()
+        public var g_selected_cat_index = 0
 
         public fun  createUserData(email: String, name: String, obj: MyCompleteListener){
             val userdata = mutableMapOf<String,Any>()
@@ -49,12 +51,12 @@ class DBQuery {
                         // Process the data as needed
                     }
                     val catListDoc: QueryDocumentSnapshot? = docList["categories"]
-                    var catCount:Long?= catListDoc!!.getLong("COUNT")
+                    val catCount:Long?= catListDoc!!.getLong("COUNT")
                     for(i in 1..catCount!!){
-                        var catID = catListDoc.getString("CAT$i" +"_ID")
-                        var catDoc:QueryDocumentSnapshot?= docList[catID]
-                        var noOfTest= catDoc!!.getLong("NO_OF_TEST")!!.toInt()
-                        var catName= catDoc.getString("NAME")
+                        val catID = catListDoc.getString("CAT$i" +"_ID")
+                        val catDoc:QueryDocumentSnapshot?= docList[catID]
+                        val noOfTest= catDoc!!.getLong("NO_OF_TEST")!!.toInt()
+                        val catName= catDoc.getString("NAME")
                         g_catList.add(CategoryModel(catID.toString(), catName.toString(),noOfTest))
                     }
                     completeListener.onSuccess()
@@ -65,6 +67,31 @@ class DBQuery {
 
         }
 
+        public fun loadTestData(completeListener: MyCompleteListener){
+            g_testList.clear()
+            g_firestore.collection("QUIZ").document(g_catList[g_selected_cat_index].getDocId())
+                .collection("TESTS_LIST").document("TESTS_INFO")
+                .get()
+                .addOnSuccessListener {documentSnapshot->
+
+
+                        val noOfTest = g_catList[g_selected_cat_index].getNumTest()
+                        for (i in 1..noOfTest) {
+                            val testId = documentSnapshot?.getString("TEST$i" + "_ID")
+                            val testTime = documentSnapshot?.getLong("TEST$i" + "_TIME")?.toInt()
+                            if (testId != null && testTime != null) {
+                                g_testList.add(TestModel(testId, 20, testTime))
+                            }
+
+                        }
+                        completeListener.onSuccess()
+                    }
+                .addOnFailureListener {
+                    completeListener.onFailure()
+                }
+        }
+
     }
+
 
 }

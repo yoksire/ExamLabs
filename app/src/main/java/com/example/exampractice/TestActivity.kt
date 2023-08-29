@@ -1,9 +1,14 @@
 package com.example.exampractice
 
 import android.annotation.SuppressLint
+import android.app.Dialog
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import android.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +16,11 @@ import androidx.recyclerview.widget.RecyclerView
 class TestActivity : AppCompatActivity() {
     private lateinit var testView:RecyclerView
     private lateinit var toolbar: androidx.appcompat.widget.Toolbar
-    private lateinit var  testList:MutableList<TestModel>
+    private lateinit var adapter: TestAdapter
+    private lateinit var progressDialog:Dialog
+    private lateinit var dialogText: TextView
+    private lateinit var context: Context
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,37 +29,54 @@ class TestActivity : AppCompatActivity() {
 
         testView=findViewById(R.id.test_recycler_view)
         toolbar=findViewById(R.id.toolbar)
-        testList=ArrayList()
+        context=this
+
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(true)
-        val catIndex = intent.getIntExtra("CAT_INDEX",0)
-        supportActionBar?.title = DBQuery.g_catList[catIndex].getName()
+
+        supportActionBar?.title = DBQuery.g_catList[DBQuery.g_selected_cat_index].getName()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeButtonEnabled(true)
+
 
         testView =findViewById(R.id.test_recycler_view)
+
+        progressDialog= Dialog(this)
+        progressDialog.setContentView(R.layout.dialog_layout)
+        progressDialog.setCancelable(false)
+        progressDialog.window?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+
+        dialogText=progressDialog.findViewById(R.id.dialog_text)
+        dialogText.text="Loading..."
+
+        progressDialog.show()
+
 
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = RecyclerView.VERTICAL
         testView.layoutManager = layoutManager
+        val obj = object : MyCompleteListener {
+            override fun onSuccess() {
+                adapter= TestAdapter(DBQuery.g_testList)
+                testView.adapter =adapter
+                progressDialog.dismiss()
+            }
 
-        loadTestData()
-        val adapter= TestAdapter(testList)
-        testView.adapter =adapter
+            override fun onFailure() {
+                progressDialog.dismiss()
+                Toast.makeText(
+                    context,
+                    "Something went wrong ! Please try again",
+                    Toast.LENGTH_SHORT,
+                ).show()
+            }
+        }
+
+        DBQuery.loadTestData(obj)
+
 
     }
-    private fun loadTestData(){
-        testList.clear()
-        testList.add(TestModel("1",90,60))
-        testList.add(TestModel("2",90,60))
-        testList.add(TestModel("3",90,60))
-        testList.add(TestModel("4",180,120))
-        testList.add(TestModel("5",180,120))
-        testList.add(TestModel("6",180,120))
-        testList.add(TestModel("7",300,20))
-        testList.add(TestModel("8",300,20))
-    }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 

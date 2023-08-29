@@ -27,8 +27,8 @@ class CategoryAdapter(private var cat_list: List<CategoryModel>) : BaseAdapter()
 
         val myView:View=LayoutInflater.from(parent!!.context).inflate(R.layout.cat_item_layout,parent,false)
         myView.setOnClickListener {
+            DBQuery.g_selected_cat_index=position
             val i = Intent(convertView?.context,TestActivity::class.java)
-            i.putExtra("CAT_INDEX",position)
             convertView?.context?.startActivity(i)
         }
         val catName =myView.findViewById<TextView>(R.id.catName)
