@@ -56,13 +56,16 @@ class LoginActivity : AppCompatActivity() {
         tvSignUp=findViewById(R.id.tvSignup)
         gSignB=findViewById(R.id.google_sigin)
          context=this
+
+
         progressDialog= Dialog(this)
         progressDialog.setContentView(R.layout.dialog_layout)
         progressDialog.setCancelable(false)
         progressDialog.window?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-
         dialogText=progressDialog.findViewById(R.id.dialog_text)
         dialogText.text="Signing In..."
+
+
         auth=FirebaseAuth.getInstance()
         val gso= GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.web_server_id))
@@ -97,7 +100,9 @@ class LoginActivity : AppCompatActivity() {
     private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         result->
         if(result.resultCode == Activity.RESULT_OK){
+
             val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+            Toast.makeText(this,"Sign In Failed",Toast.LENGTH_SHORT).show()
             handleResults(task)
         }
     }
@@ -106,7 +111,7 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful){
                     val account:GoogleSignInAccount? = task.result
                     if(account!=null){
-                        updateUI(account)
+                       updateUI(account)
                     }
 
                 }else{
@@ -132,8 +137,8 @@ class LoginActivity : AppCompatActivity() {
                                 val obj1=object :MyCompleteListener{
                                     override fun onSuccess() {
                                         progressDialog.dismiss()
-                                        Toast.makeText(context,"Login Success",Toast.LENGTH_SHORT).show()
-                                        val i=Intent(context,MainActivity::class.java)
+                                        Toast.makeText(this@LoginActivity,"Login Success",Toast.LENGTH_SHORT).show()
+                                        val i=Intent(this@LoginActivity,MainActivity::class.java)
                                         startActivity(i)
                                         (context as LoginActivity).finish()
                                     }
