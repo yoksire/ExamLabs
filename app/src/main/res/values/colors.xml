@@ -8,7 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="colorPrimary">#032D95</color>
-    <color name="colorPrimaryDark">#901cd9</color>
+    <color name="colorPrimaryDark">#02216E</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="backGround">#D0E1FA</color>
+    <color name="timerColor">#2DF836</color>
 
 </resources>
