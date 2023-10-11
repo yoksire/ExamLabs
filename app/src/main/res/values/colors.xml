@@ -12,5 +12,6 @@
     <color name="colorAccent">#D81B60</color>
     <color name="backGround">#D0E1FA</color>
     <color name="timerColor">#2DF836</color>
+    <color name="cvColorHead">#333333</color>
 
 </resources>

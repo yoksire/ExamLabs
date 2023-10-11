@@ -82,6 +82,50 @@
             android:src="@drawable/ic_rightmenu"/>
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="12dp"
+        android:background="@color/colorPrimary">
+
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="24dp"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/ic_qleft"
+            tools:ignore="TouchTargetSizeCheck" />
+        <Button
+            android:layout_width="wrap_content"
+            android:padding="5dp"
+            android:layout_height="36dp"
+            android:background="@drawable/button_border"
+            android:text="clear selection"
+            android:textColor="@color/white"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:padding="5dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/button_border"
+            android:text="Mark for Review"
+            android:textColor="@color/white"/>
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/ic_qright"
+            tools:ignore="TouchTargetSizeCheck" />
+
+    </LinearLayout>
 
 
 
