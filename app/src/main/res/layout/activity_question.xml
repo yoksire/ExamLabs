@@ -19,6 +19,7 @@
         android:orientation="horizontal"
         >
         <TextView
+            android:id="@+id/tvQnum"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="1/25"
@@ -31,6 +32,7 @@
 
             />
         <TextView
+            android:id="@+id/tvTimer"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="20 : 15 min"
@@ -42,6 +44,7 @@
             />
 
         <Button
+            android:id="@+id/btnSubmit"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
             android:layout_weight="1"
@@ -55,6 +58,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,6 +68,7 @@
         android:padding="12dp">
 
         <TextView
+            android:id="@+id/tvQCat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="GK"
@@ -71,11 +76,13 @@
             android:layout_weight="1"
             android:textColor="@color/white"/>
         <ImageView
+            android:id="@+id/ivBookmark"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_weight="1"
             android:src="@drawable/ic_bookmark"/>
         <ImageView
+            android:id="@+id/ivGridView"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_weight="1"
@@ -83,6 +90,7 @@
 
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -94,6 +102,7 @@
         android:background="@color/colorPrimary">
 
         <ImageButton
+            android:id="@+id/btnLeft"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -102,6 +111,7 @@
             android:src="@drawable/ic_qleft"
             tools:ignore="TouchTargetSizeCheck" />
         <Button
+            android:id="@+id/btnClear"
             android:layout_width="wrap_content"
             android:padding="5dp"
             android:layout_height="36dp"
@@ -109,6 +119,7 @@
             android:text="clear selection"
             android:textColor="@color/white"/>
         <Button
+            android:id="@+id/btnMarkReview"
             android:layout_width="wrap_content"
             android:padding="5dp"
             android:layout_height="36dp"
@@ -117,6 +128,7 @@
             android:text="Mark for Review"
             android:textColor="@color/white"/>
         <ImageButton
+            android:id="@+id/btnRight"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
@@ -126,6 +138,17 @@
             tools:ignore="TouchTargetSizeCheck" />
 
     </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        android:id="@+id/questionView"
+        app:layout_constraintBottom_toTopOf="@id/linearLayout3"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 
 

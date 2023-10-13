@@ -31,23 +31,20 @@ class TestAdapter(private var testList: MutableList<TestModel>) :
         private var testNum= itemView.findViewById<TextView>(R.id.testNo)
         private var topScore= itemView.findViewById<TextView>(R.id.scoreText)
         private var progressBar= itemView.findViewById<ProgressBar>(R.id.testProgressBar)
-        init {
-            itemView.setOnClickListener {
-                val i= Intent(itemView.context,QuestionActivity::class.java)
-                itemView.context.startActivity(i)
-                
-            }
-        }
-
-
-
-
-
 
         fun setData(pos:Int,pgr:Int){
             testNum.text= "Test No: ${pos + 1}"
             topScore.text = "$pgr %"
             progressBar.progress = pgr
+
+            itemView.setOnClickListener {
+
+                    DBQuery.g_selected_test_index=pos
+                    val i= Intent(itemView.context,StartTestActivity::class.java)
+                    itemView.context.startActivity(i)
+
+            }
+
         }
 
     }

@@ -17,6 +17,8 @@ class DBQuery {
         public  var g_catList:MutableList<CategoryModel> = ArrayList()
         public val  g_testList:MutableList<TestModel> = ArrayList()
         public var g_selected_cat_index = 0
+        public var g_selected_test_index = 0
+        public var g_questionList:MutableList<QuestionModel> = ArrayList()
 
         public fun  createUserData(email: String, name: String, obj: MyCompleteListener){
             val userdata = mutableMapOf<String,Any>()
@@ -86,6 +88,35 @@ class DBQuery {
                         }
                         completeListener.onSuccess()
                     }
+                .addOnFailureListener {
+                    completeListener.onFailure()
+                }
+        }
+
+        public fun loadQuestion(completeListener: MyCompleteListener){
+            g_questionList.clear()
+            g_firestore.collection("Questions")
+                .whereEqualTo("CATEGORY", g_catList[g_selected_cat_index].getDocId())
+                .whereEqualTo("TEST", g_testList[g_selected_test_index].getTestID())
+                .get()
+                .addOnSuccessListener { documentSnapshot->
+
+                    for(doc in documentSnapshot){
+
+                        g_questionList.add(QuestionModel(
+                            doc.getString("QUESTION")!!,
+                            doc.getString("A")!!,
+                            doc.getString("B")!!,
+                            doc.getString("C")!!,
+                            doc.getString("D")!!,
+                            doc.getLong("ANSWER")!!.toInt()
+
+                        ))
+
+                    }
+                    completeListener.onSuccess()
+
+                }
                 .addOnFailureListener {
                     completeListener.onFailure()
                 }
