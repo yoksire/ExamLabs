@@ -17,6 +17,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
+import com.example.exampractice.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.BeginSignInRequest.GoogleIdTokenRequestOptions
 import com.google.android.gms.auth.api.identity.SignInClient
@@ -25,6 +26,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.launch
@@ -33,10 +35,9 @@ import java.lang.Exception
 import java.util.concurrent.CancellationException
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var etEmail:EditText
-    private lateinit var etPsw:EditText
     private lateinit var btnLogin:Button
     private lateinit var tvForgotPsw:TextView
+
     private lateinit var tvSignUp:TextView
     private lateinit var progressDialog:Dialog
     private lateinit var dialogText:TextView
@@ -44,13 +45,12 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var auth:FirebaseAuth
     private lateinit var gSignB:RelativeLayout
     private lateinit var googleSignInClient :GoogleSignInClient
+    private lateinit var binding: ActivityLoginBinding
 
      override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-
-        etEmail=findViewById(R.id.etEmail)
-        etPsw=findViewById(R.id.etPassword)
+         binding= ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         btnLogin=findViewById(R.id.btnLogin)
         tvForgotPsw=findViewById(R.id.tvForgotPass)
         tvSignUp=findViewById(R.id.tvSignup)
@@ -211,19 +211,19 @@ class LoginActivity : AppCompatActivity() {
     private fun validateData():Boolean{
 
 
-        if (etEmail.text.toString().isEmpty()){
-            etEmail.error = "Enter E-mail Id"
+        if (binding.etEmailId.text.toString().isEmpty()){
+            binding.etEmailId.error = "Enter E-mail Id"
             return false
         }
-        if(etPsw.text.toString().isEmpty()){
-            etPsw.error="Enter Password"
+        if(binding.etPasswordId.text.toString().isEmpty()){
+            binding.etPasswordId.error="Enter Password"
             return false
         }
         return true
     }
     private fun login(){
         progressDialog.show()
-        auth.signInWithEmailAndPassword(etEmail.text.toString().trim(), etPsw.text.toString().trim())
+        auth.signInWithEmailAndPassword(binding.etEmailId.text.toString().trim(), binding.etPasswordId.text.toString().trim())
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
 
