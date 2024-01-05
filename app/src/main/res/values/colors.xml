@@ -13,5 +13,10 @@
     <color name="backGround">#D0E1FA</color>
     <color name="timerColor">#2DF836</color>
     <color name="cvColorHead">#333333</color>
+    <color name="not_visited">@android:color/darker_gray</color>
+    <color name="answered">@android:color/holo_green_light</color>
+    <color name="not_answered">@android:color/holo_red_light</color>
+    <color name="review">@android:color/holo_orange_light</color>
+
 
 </resources>

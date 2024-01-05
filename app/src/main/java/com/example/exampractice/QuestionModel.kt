@@ -1,12 +1,14 @@
 package com.example.exampractice
 
-class QuestionModel(question: String, optionA: String, optionB: String, optionC: String, optionD: String, correctAnswer: Int) {
-    private lateinit var _question: String
-    private lateinit var _optionA: String
-    private lateinit var _optionB: String
-    private lateinit var _optionC: String
-    private lateinit var _optionD: String
+class QuestionModel(question: String, optionA: String, optionB: String, optionC: String, optionD: String, correctAnswer: Int,selectedAnswer: Int,status:Int) {
+    private var _question: String
+    private var _optionA: String
+    private var _optionB: String
+    private var _optionC: String
+    private var _optionD: String
     private var _correctAnswer: Int = 0
+    private var _selectedAnswer: Int = 0
+    private var _status:Int=0
 
     init {
         _question = question
@@ -15,6 +17,8 @@ class QuestionModel(question: String, optionA: String, optionB: String, optionC:
         _optionC = optionC
         _optionD = optionD
         _correctAnswer = correctAnswer
+        _selectedAnswer = selectedAnswer
+        _status=status
     }
 
     // Getter and Setter for 'question'
@@ -57,5 +61,17 @@ class QuestionModel(question: String, optionA: String, optionB: String, optionC:
         get() = _correctAnswer
         set(value) {
             _correctAnswer = value
+        }
+    // Getter and Setter for 'selectedAnswer'
+    var selectedAnswer
+        get() = _selectedAnswer
+        set(value) {
+            _selectedAnswer = value
+        }
+    // Getter and Setter for 'status'
+    var status
+        get() = _status
+        set(value) {
+            _status = value
         }
 }

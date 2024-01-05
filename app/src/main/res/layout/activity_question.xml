@@ -149,6 +149,16 @@
         app:layout_constraintEnd_toEndOf="parent">
 
     </androidx.recyclerview.widget.RecyclerView>
+    <ImageView
+        android:id="@+id/ivBookmark2"
+        android:elevation="6dp"
+        android:layout_height="70dp"
+        android:layout_width="70dp"
+        android:src="@drawable/bookmark"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout2"
+        />
 
 
 

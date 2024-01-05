@@ -19,6 +19,10 @@ class DBQuery {
         public var g_selected_cat_index = 0
         public var g_selected_test_index = 0
         public var g_questionList:MutableList<QuestionModel> = ArrayList()
+        public final val NOT_VISITED = 0
+        public final val NOT_ANSWERED = 1
+        public final val ANSWERED = 2
+        public final val REVIEW = 3
 
         public fun  createUserData(email: String, name: String, obj: MyCompleteListener){
             val userdata = mutableMapOf<String,Any>()
@@ -109,7 +113,9 @@ class DBQuery {
                             doc.getString("B")!!,
                             doc.getString("C")!!,
                             doc.getString("D")!!,
-                            doc.getLong("ANSWER")!!.toInt()
+                            doc.getLong("Answer")!!.toInt(),
+                            0,
+                            NOT_VISITED
 
                         ))
 

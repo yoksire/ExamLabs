@@ -37,7 +37,6 @@ import java.util.concurrent.CancellationException
 class LoginActivity : AppCompatActivity() {
     private lateinit var btnLogin:Button
     private lateinit var tvForgotPsw:TextView
-
     private lateinit var tvSignUp:TextView
     private lateinit var progressDialog:Dialog
     private lateinit var dialogText:TextView
@@ -100,62 +99,19 @@ class LoginActivity : AppCompatActivity() {
     private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         result->
         if(result.resultCode == Activity.RESULT_OK){
-
             val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-            Toast.makeText(this,"Sign In Failed",Toast.LENGTH_SHORT).show()
-            handleResults(task)
-        }
-    }
 
-    private fun handleResults(task: Task<GoogleSignInAccount>) {
-                if (task.isSuccessful){
-                    val account:GoogleSignInAccount? = task.result
-                    if(account!=null){
-                       updateUI(account)
-                    }
-
-                }else{
-                    Toast.makeText(this,"Sign In Failed",Toast.LENGTH_SHORT).show()
-
-                }
-    }
-    private fun updateUI(account:GoogleSignInAccount){
-        progressDialog.show()
-
-        val credential = GoogleAuthProvider.getCredential(account.idToken,null)
-        auth.signInWithCredential(credential).addOnCompleteListener{task->
-                if(task.isSuccessful){
-
-                    // Sign in success, update UI with the signed-in user's information
-
-                    if(task.result.additionalUserInfo!!.isNewUser){
-                        val user =auth.currentUser
-
-                        val obj =object: MyCompleteListener{
+            if(task.isSuccessful){
+                val account:GoogleSignInAccount? = task.result
+                val credential = GoogleAuthProvider.getCredential(account!!.idToken,null)
+                auth.signInWithCredential(credential).addOnCompleteListener{
+                    if(it.isSuccessful){
+                        val obj1=object :MyCompleteListener{
                             override fun onSuccess() {
+                                progressDialog.dismiss()
 
-                                val obj1=object :MyCompleteListener{
-                                    override fun onSuccess() {
-                                        progressDialog.dismiss()
-                                        Toast.makeText(this@LoginActivity,"Login Success",Toast.LENGTH_SHORT).show()
-                                        val i=Intent(this@LoginActivity,MainActivity::class.java)
-                                        startActivity(i)
-                                        (context as LoginActivity).finish()
-                                    }
-
-                                    override fun onFailure() {
-                                        progressDialog.dismiss()
-                                        Toast.makeText(
-                                            context,
-                                            "Something went wrong ! Please try again",
-                                            Toast.LENGTH_SHORT,
-                                        ).show()
-                                    }
-
-                                }
-                                DBQuery.loadCategories(obj1)
-
-
+                                val i=Intent(this@LoginActivity,MainActivity::class.java)
+                                startActivity(i)
                             }
 
                             override fun onFailure() {
@@ -168,45 +124,125 @@ class LoginActivity : AppCompatActivity() {
                             }
 
                         }
-                        if (user != null) {
-                            DBQuery.createUserData(user.email.toString() , user.displayName.toString(), obj )
-
-                        }
+                        DBQuery.loadCategories(obj1)
                     }else{
 
-                        val obj =object: MyCompleteListener{
-                            override fun onSuccess() {
-                                progressDialog.dismiss()
-                                val i=Intent(context,MainActivity::class.java)
-                                startActivity(i)
-                                Toast.makeText(context,"Login Success",Toast.LENGTH_SHORT).show()
-                                (context as LoginActivity).finish()
-                            }
-
-                            override fun onFailure() {
-                                progressDialog.dismiss()
-                                Toast.makeText(
-                                    context,
-                                    "Something went wrong ! Please try again",
-                                    Toast.LENGTH_SHORT,
-                                ).show()
-                            }
-
-                        }
-                        DBQuery.loadCategories(obj)
+                        Toast.makeText(this,"Sign In Failed 2",Toast.LENGTH_SHORT).show()
                     }
+                }
+            }
 
-                }
-            else{
-                    progressDialog.dismiss()
-                    Toast.makeText(
-                        this,
-                        task.exception?.message.toString(),
-                        Toast.LENGTH_SHORT,
-                    ).show()
-                }
+        }else{
+            Log.e("GoogleSignIn", "Sign In Failed with result code: ${result.resultCode}")
+            if (result.data != null) {
+                Log.e("GoogleSignIn", "Result data: ${result.data}")
+            }
+
+
+            Toast.makeText(this,"Sign In Failed 1",Toast.LENGTH_SHORT).show()
         }
     }
+
+//    private fun handleResults(task: Task<GoogleSignInAccount>) {
+//                if (task.isSuccessful){
+//                    val account:GoogleSignInAccount? = task.result
+//                    if(account!=null){
+//                       updateUI(account)
+//                    }
+//
+//                }else{
+//                    Toast.makeText(this,"Sign In Failed",Toast.LENGTH_SHORT).show()
+//
+//                }
+//    }
+//    private fun updateUI(account:GoogleSignInAccount){
+//        progressDialog.show()
+//
+//        val credential = GoogleAuthProvider.getCredential(account.idToken,null)
+//        auth.signInWithCredential(credential).addOnCompleteListener{task->
+//                if(task.isSuccessful){
+//
+//                    // Sign in success, update UI with the signed-in user's information
+//
+//                    if(task.result.additionalUserInfo!!.isNewUser){
+//                        val user =auth.currentUser
+//
+//                        val obj =object: MyCompleteListener{
+//                            override fun onSuccess() {
+//
+//                                val obj1=object :MyCompleteListener{
+//                                    override fun onSuccess() {
+//                                        progressDialog.dismiss()
+//                                        Toast.makeText(this@LoginActivity,"Login Success",Toast.LENGTH_SHORT).show()
+//                                        val i=Intent(this@LoginActivity,MainActivity::class.java)
+//                                        startActivity(i)
+//                                        (context as LoginActivity).finish()
+//                                    }
+//
+//                                    override fun onFailure() {
+//                                        progressDialog.dismiss()
+//                                        Toast.makeText(
+//                                            context,
+//                                            "Something went wrong ! Please try again",
+//                                            Toast.LENGTH_SHORT,
+//                                        ).show()
+//                                    }
+//
+//                                }
+//                                DBQuery.loadCategories(obj1)
+//
+//
+//                            }
+//
+//                            override fun onFailure() {
+//                                progressDialog.dismiss()
+//                                Toast.makeText(
+//                                    context,
+//                                    "Something went wrong ! Please try again",
+//                                    Toast.LENGTH_SHORT,
+//                                ).show()
+//                            }
+//
+//                        }
+//                        if (user != null) {
+//                            DBQuery.createUserData(user.email.toString() , user.displayName.toString(), obj )
+//
+//                        }
+//                    }else{
+//
+//                        val obj =object: MyCompleteListener{
+//                            override fun onSuccess() {
+//                                progressDialog.dismiss()
+//                                val i=Intent(context,MainActivity::class.java)
+//                                startActivity(i)
+//                                Toast.makeText(context,"Login Success",Toast.LENGTH_SHORT).show()
+//                                (context as LoginActivity).finish()
+//                            }
+//
+//                            override fun onFailure() {
+//                                progressDialog.dismiss()
+//                                Toast.makeText(
+//                                    context,
+//                                    "Something went wrong ! Please try again",
+//                                    Toast.LENGTH_SHORT,
+//                                ).show()
+//                            }
+//
+//                        }
+//                        DBQuery.loadCategories(obj)
+//                    }
+//
+//                }
+//            else{
+//                    progressDialog.dismiss()
+//                    Toast.makeText(
+//                        this,
+//                        task.exception?.message.toString(),
+//                        Toast.LENGTH_SHORT,
+//                    ).show()
+//                }
+//        }
+//    }
 
     private fun validateData():Boolean{
 

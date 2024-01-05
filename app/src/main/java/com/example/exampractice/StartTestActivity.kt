@@ -19,7 +19,7 @@ class StartTestActivity : AppCompatActivity() {
         setContentView(binding.root)
         init()
 
-        progressDialog= Dialog(this)
+        progressDialog= Dialog(this@StartTestActivity)
         progressDialog.setContentView(R.layout.dialog_layout)
         progressDialog.setCancelable(false)
         progressDialog.window?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -55,7 +55,7 @@ class StartTestActivity : AppCompatActivity() {
 
     private fun setData() {
         binding.tvCategory.text= DBQuery.g_catList[DBQuery.g_selected_cat_index].getName()
-        val sTN = "Test No. ${(DBQuery.g_selected_test_index+1).toString()}"
+        val sTN = "Test No. ${(DBQuery.g_selected_test_index+1)}"
         val sTQ = DBQuery.g_questionList.size.toString()
         val sBS = DBQuery.g_testList[DBQuery.g_selected_test_index].getTopScore().toString()
         val sTime= DBQuery.g_testList[DBQuery.g_selected_test_index].getTime().toString()
@@ -70,9 +70,9 @@ class StartTestActivity : AppCompatActivity() {
             finish()
         }
         binding.btnStart.setOnClickListener {
-            val i = Intent(this@StartTestActivity,TestActivity::class.java)
+            val i = Intent(this@StartTestActivity,QuestionActivity::class.java)
             startActivity(i)
-            finish()
+            this@StartTestActivity.finish()
         }
     }
 }
