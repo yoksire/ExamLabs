@@ -13,6 +13,9 @@
         android:theme="@style/Theme.ExamPractice"
         tools:targetApi="31">
         <activity
+            android:name=".ScoreActivity"
+            android:exported="false" />
+        <activity
             android:name=".StartTestActivity"
             android:exported="false" />
         <activity
@@ -42,6 +45,10 @@
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.ExamPractice.NoActionBar" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

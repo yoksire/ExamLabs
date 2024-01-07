@@ -1,17 +1,9 @@
-package com.example.exampractice
+package com.example.exampractice.model
 
-class CategoryModel {
-    // Private variables
-    private var docId: String
-    private var name: String
-    private var numTest: Int
-
-    // Constructor
-    constructor(docId: String, name: String, numTest: Int) {
-        this.docId = docId
-        this.name = name
-        this.numTest = numTest
-    }
+class CategoryModel// Constructor
+    (// Private variables
+    private var docId: String, private var name: String, private var numTest: Int
+) {
 
     // Getter and setter for docId
     fun getDocId(): String {

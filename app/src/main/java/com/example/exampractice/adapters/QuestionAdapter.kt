@@ -1,4 +1,4 @@
-package com.example.exampractice
+package com.example.exampractice.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,8 +6,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.exampractice.DBQuery
 import com.example.exampractice.DBQuery.Companion.ANSWERED
 import com.example.exampractice.DBQuery.Companion.NOT_ANSWERED
+import com.example.exampractice.R
+import com.example.exampractice.model.QuestionModel
 
 class QuestionAdapter(private var questionList:MutableList<QuestionModel>) : RecyclerView.Adapter<QuestionAdapter.ViewHolder>() {
 
@@ -88,12 +91,12 @@ class QuestionAdapter(private var questionList:MutableList<QuestionModel>) : Rec
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestionAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val myView:View= LayoutInflater.from(parent.context).inflate(R.layout.question_item_layout,parent,false)
         return ViewHolder(myView)
     }
 
-    override fun onBindViewHolder(holder: QuestionAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.setData(position)
     }
 

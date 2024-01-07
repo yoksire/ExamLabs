@@ -1,4 +1,4 @@
-package com.example.exampractice
+package com.example.exampractice.model
 
 class QuestionModel(question: String, optionA: String, optionB: String, optionC: String, optionD: String, correctAnswer: Int,selectedAnswer: Int,status:Int) {
     private var _question: String

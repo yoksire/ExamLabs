@@ -45,7 +45,7 @@ class SplashActivity : AppCompatActivity() {
         DBQuery.g_firestore= Firebase.firestore
         if(mAuth.currentUser != null){
             appName.animate().setDuration(1500).alpha(1f).withEndAction{
-                DBQuery.loadCategories(obj)
+                DBQuery.loadData(obj)
 
 
             }

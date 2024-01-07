@@ -1,16 +1,11 @@
-package com.example.exampractice
+package com.example.exampractice.model
 
-public class TestModel {
-    private var testID:String
-    private var topScore:Int
-    private var  time:Int
+public class TestModel(
+    private var testID: String,
+    private var topScore: Int,
+    private var time: Int
+) {
 
-    constructor(testID:String,topScore:Int,time:Int){
-        this.testID=testID
-        this.topScore=topScore
-        this.time=time
-
-    }
     fun getTestID():String{
         return testID
     }

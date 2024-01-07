@@ -1,6 +1,5 @@
 package com.example.exampractice
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
@@ -9,9 +8,9 @@ import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import android.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.exampractice.adapters.TestAdapter
 
 class TestActivity : AppCompatActivity() {
     private lateinit var testView:RecyclerView
@@ -57,9 +56,25 @@ class TestActivity : AppCompatActivity() {
         testView.layoutManager = layoutManager
         val obj = object : MyCompleteListener {
             override fun onSuccess() {
-                adapter= TestAdapter(DBQuery.g_testList)
-                testView.adapter =adapter
-                progressDialog.dismiss()
+                val obj1=object :MyCompleteListener{
+                    override fun onSuccess() {
+                        adapter= TestAdapter(DBQuery.g_testList)
+                        testView.adapter =adapter
+                        progressDialog.dismiss()
+                    }
+
+                    override fun onFailure() {
+                        progressDialog.dismiss()
+                        Toast.makeText(
+                            context,
+                            "Something went wrong ! Please try again",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                    }
+
+                }
+                DBQuery.loadData(obj1)
+
             }
 
             override fun onFailure() {

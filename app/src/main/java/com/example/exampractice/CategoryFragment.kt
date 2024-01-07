@@ -1,12 +1,12 @@
 package com.example.exampractice
 
 import android.os.Bundle
-import android.text.method.TextKeyListener.clear
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.GridView
+import com.example.exampractice.adapters.CategoryAdapter
 
 class CategoryFragment : Fragment() {
 

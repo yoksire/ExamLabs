@@ -1,4 +1,4 @@
-package com.example.exampractice
+package com.example.exampractice.adapters
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.example.exampractice.DBQuery
+import com.example.exampractice.QuestionActivity
+import com.example.exampractice.R
 
 class QuestionGridAdapter(private var context: Context, private var numOfQues: Int) : BaseAdapter() {
     override fun getCount(): Int {
@@ -42,10 +45,18 @@ class QuestionGridAdapter(private var context: Context, private var numOfQues: I
         tvQuestionNum.text = (position+1).toString()
 
         when(DBQuery.g_questionList[position].status){
-            DBQuery.NOT_VISITED -> tvQuestionNum.backgroundTintList= ColorStateList.valueOf(ContextCompat.getColor(parent!!.context,R.color.not_visited))
-            DBQuery.NOT_ANSWERED -> tvQuestionNum.backgroundTintList= ColorStateList.valueOf(ContextCompat.getColor(parent!!.context,R.color.not_answered))
-            DBQuery.ANSWERED -> tvQuestionNum.backgroundTintList= ColorStateList.valueOf(ContextCompat.getColor(parent!!.context,R.color.answered))
-            DBQuery.REVIEW -> tvQuestionNum.backgroundTintList= ColorStateList.valueOf(ContextCompat.getColor(parent!!.context,R.color.review))
+            DBQuery.NOT_VISITED -> tvQuestionNum.backgroundTintList= ColorStateList.valueOf(ContextCompat.getColor(parent!!.context,
+                R.color.not_visited
+            ))
+            DBQuery.NOT_ANSWERED -> tvQuestionNum.backgroundTintList= ColorStateList.valueOf(ContextCompat.getColor(parent!!.context,
+                R.color.not_answered
+            ))
+            DBQuery.ANSWERED -> tvQuestionNum.backgroundTintList= ColorStateList.valueOf(ContextCompat.getColor(parent!!.context,
+                R.color.answered
+            ))
+            DBQuery.REVIEW -> tvQuestionNum.backgroundTintList= ColorStateList.valueOf(ContextCompat.getColor(parent!!.context,
+                R.color.review
+            ))
 
         }
         return view

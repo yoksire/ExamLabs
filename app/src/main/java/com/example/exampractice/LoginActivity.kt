@@ -124,7 +124,7 @@ class LoginActivity : AppCompatActivity() {
                             }
 
                         }
-                        DBQuery.loadCategories(obj1)
+                        DBQuery.loadData(obj1)
                     }else{
 
                         Toast.makeText(this,"Sign In Failed 2",Toast.LENGTH_SHORT).show()
@@ -284,7 +284,7 @@ class LoginActivity : AppCompatActivity() {
                         }
 
                     }
-                    DBQuery.loadCategories(obj1)
+                    DBQuery.loadData(obj1)
 
 
 

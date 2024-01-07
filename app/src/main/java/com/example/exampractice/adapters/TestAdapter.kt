@@ -1,4 +1,4 @@
-package com.example.exampractice
+package com.example.exampractice.adapters
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.exampractice.databinding.ActivityTestBinding
+import com.example.exampractice.DBQuery
+import com.example.exampractice.R
+import com.example.exampractice.StartTestActivity
+import com.example.exampractice.model.TestModel
 
 class TestAdapter(private var testList: MutableList<TestModel>) :
     RecyclerView.Adapter<TestAdapter.ViewHolder>() {
@@ -39,8 +42,8 @@ class TestAdapter(private var testList: MutableList<TestModel>) :
 
             itemView.setOnClickListener {
 
-                    DBQuery.g_selected_test_index=pos
-                    val i= Intent(itemView.context,StartTestActivity::class.java)
+                    DBQuery.g_selected_test_index =pos
+                    val i= Intent(itemView.context, StartTestActivity::class.java)
                     itemView.context.startActivity(i)
 
             }
